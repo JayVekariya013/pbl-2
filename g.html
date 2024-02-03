@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    <!-- Include Chart.js and moment.js libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="financeGraph"></canvas>
+    </div>
+
+    <script>
+        // Sample real data (replace this with your actual data)
+        const spendingData = [
+            { date: '2024-01-01', amount: 330 },
+            { date: '2024-01-02', amount: 120 },
+            { date: '2024-01-03', amount: 80 },
+            { date: '2024-01-04', amount: 150 },
+            { date: '2024-01-05', amount: 200 },
+            { date: '2024-01-06', amount: 200 },
+            { date: '2024-01-07', amount: 215 },
+            { date: '2024-01-08', amount: 200 },
+            { date: '2024-01-09', amount: 200 },
+            { date: '2024-01-10', amount: 200 },
+            { date: '2024-01-11', amount: 200 },
+            { date: '2024-01-12', amount: 200 },
+            { date: '2024-01-13', amount: 200 },
+            { date: '2024-01-14', amount: 200 },
+            { date: '2024-01-15', amount: 200 },
+            { date: '2024-01-16', amount: 200 },
+
+        ];
+
+        // Process data to format dates and extract spending amounts
+        const labels = spendingData.map(item => moment(item.date).format('MMMM D'));
+        const spendingValues = spendingData.map(item => item.amount);
+
+        // Create a line chart
+        const ctx = document.getElementById('financeGraph').getContext('2d');
+        const financeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Daily Spending',
+                    backgroundColor: 'rgba(75, 215, 192, 0.2)',
+                    borderColor: 'rgba(75, 230, 192, 1)',
+                    borderWidth: 2,
+                    data: spendingValues,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Days'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Spending ($)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

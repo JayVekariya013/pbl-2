@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="css/signup.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const signupForm = document.getElementById('signupForm');
+    
+        signupForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent form submission
+            
+            // Collect signup data from form fields
+            const username = document.getElementById('username').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            // Prepare signup data object
+            const signupData = {
+                username: username,
+                phoneNumber: phoneNumber,
+                email: email,
+                password: password
+            };
+    
+            // Make POST request to backend server with signup data
+            fetch('http://127.0.0.1:3000/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signupData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Signup successful');
+                    // Redirect to dashboard page
+                    window.location.href = 'dashboard.html';
+                } else {
+                    console.error('Signup failed');
+                    // Handle signup failure (e.g., display error message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form id="signupForm" onsubmit="return validateForm()">
+            <h2>Signup</h2>
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phone" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="submit">Signup</button>
+        </form>
+        <div id="error"></div>
+    </div>
+
+    <script src="js/signup.js"></script>
+
+</body>
+
+</html>
